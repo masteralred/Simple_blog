@@ -27,6 +27,14 @@ before '/' do
 	db.close
 end
 
+before '/details/:post_id' do
+	post_id=params[:post_id]
+	db = init_db
+	results = db.execute 'SELECT * FROM Posts WHERE Id=?', [post_id]
+	@row=results[0]
+	db.close
+end
+
 get '/' do
   	erb :index
 end
@@ -36,8 +44,7 @@ get '/new' do
 end
 
 get '/details/:post_id' do
-	post_id=params[:post_id]
-	erb "Displaying information about post with id #{post_id}"
+	erb :details
 end
 
 post '/new' do
