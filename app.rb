@@ -9,3 +9,8 @@ end
 get '/new' do
 	erb :new
 end
+
+post '/new' do
+	message=params[:content]
+	erb "Your typed:</br> #{message}"
+end
