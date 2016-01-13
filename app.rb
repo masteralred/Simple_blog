@@ -9,6 +9,18 @@ def init_db
 	return db
 end
 
+configure do
+	db = init_db
+	db.execute 'CREATE TABLE IF NOT EXISTS
+	"Posts"
+		(
+			"Id" INTEGER PRIMARY KEY AUTOINCREMENT,
+			"Creation_date" DATE,
+			"Content" TEXT
+		)'
+	db.close
+end
+
 before '/new' do
 	db = init_db
 	db.close
