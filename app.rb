@@ -27,7 +27,7 @@ before '/new' do
 end
 
 get '/' do
-  	erb "Hello! <a href=\"https://github.com/bootstrap-ruby/sinatra-bootstrap\">Original</a> pattern has been modified here."
+  	erb :index
 end
 
 get '/new' do
