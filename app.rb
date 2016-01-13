@@ -35,6 +35,11 @@ get '/new' do
 	erb :new
 end
 
+get '/details/:post_id' do
+	post_id=params[:post_id]
+	erb "Displaying information about post with id #{post_id}"
+end
+
 post '/new' do
 	message=params[:content]
 	(@error="Please, type your post!"; return erb :new) if message.strip.empty?
