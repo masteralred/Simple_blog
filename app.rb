@@ -41,5 +41,5 @@ post '/new' do
 	db = init_db
 	db.execute 'INSERT INTO Posts (Creation_date, Content) VALUES (datetime(), ?)', [message]
 	db.close
-	erb "Your typed:</br> #{message}"
+	redirect '/'
 end
