@@ -22,7 +22,7 @@ configure do
 	"Comments"
 		(
 			"Id" INTEGER PRIMARY KEY AUTOINCREMENT,
-			"Post_id" INTEGER
+			"Post_id" INTEGER,
 			"Creation_date" DATE,
 			"Content" TEXT
 		)'
@@ -67,6 +67,8 @@ end
 post '/details/:post_id' do
 	comment=params[:content]
 	post_id=params[:post_id]
-	erb "You typed comment: <br/> #{comment} <br/> For post with ID: #{post_id}"
-	#redirect '/details/:post_id'
+	db = init_db
+	db.execute 'INSERT INTO Comments (Post_id, Creation_date, Content) VALUES (?, datetime(), ?)', [post_id, comment]
+	db.close
+	redirect ('/details/' + post_id)
 end
