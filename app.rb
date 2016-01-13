@@ -21,8 +21,9 @@ configure do
 	db.close
 end
 
-before '/new' do
+before '/' do
 	db = init_db
+	@results = db.execute 'SELECT * FROM Posts ORDER BY Id DESC'
 	db.close
 end
 
