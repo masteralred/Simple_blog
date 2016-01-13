@@ -5,9 +5,9 @@
 		<%= row['Content'] %>
 		<br/>
 		<br/>
-		Added at: <%= row['Creation_date'] %>
+		<small style="color: #999">Added at: <%= row['Creation_date'] %></small>
 		<br/>
-		<a href="/details/<%=row['Id']%>">Comments</a>
+		<small><a href="/details/<%=row['Id']%>">Comments</a></small>
 	</p>
 	<hr/>
 <% end %>

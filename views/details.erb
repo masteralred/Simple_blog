@@ -4,11 +4,22 @@
 	<%= @row['Content'] %>
 	<br/>
 	<br/>
-	Added at: <%= @row['Creation_date'] %>
-	<br/>
+	<small style="color: #999">Added at: <%= @row['Creation_date'] %></small>
 </p>
 <hr/>
+<br/>
 <h4>Comments:</h4>
+<br/>
+<% @comments.each do |row| %>
+	<p>
+		<%= row['Content'] %>
+		<br/>
+		<small style="color: #999">Added at: <%= row['Creation_date'] %></small>
+		<br/>
+	</p>
+	<hr/>
+<% end %>
+
 <p>
 	<form action="/details/<%=@row['Id']%>" method="post">
 	  <div class="form-group">
