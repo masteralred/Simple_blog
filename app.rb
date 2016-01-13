@@ -18,6 +18,14 @@ configure do
 			"Creation_date" DATE,
 			"Content" TEXT
 		)'
+	db.execute 'CREATE TABLE IF NOT EXISTS
+	"Comments"
+		(
+			"Id" INTEGER PRIMARY KEY AUTOINCREMENT,
+			"Post_id" INTEGER
+			"Creation_date" DATE,
+			"Content" TEXT
+		)'
 	db.close
 end
 
