@@ -55,3 +55,10 @@ post '/new' do
 	db.close
 	redirect '/'
 end
+
+post '/details/:post_id' do
+	comment=params[:content]
+	post_id=params[:post_id]
+	erb "You typed comment: <br/> #{comment} <br/> For post with ID: #{post_id}"
+	#redirect '/details/:post_id'
+end
