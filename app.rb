@@ -68,7 +68,7 @@ end
 post '/details/:post_id' do
 	comment=params[:content]
 	post_id=params[:post_id]
-	(@error="Please, type your post!"; return erb :details) if comment.strip.empty?
+	(@error="Please, type your comment!"; return erb :details) if comment.strip.empty?
 	db = init_db
 	db.execute 'INSERT INTO Comments (Post_id, Creation_date, Content) VALUES (?, datetime(), ?)', [post_id, comment]
 	db.close
