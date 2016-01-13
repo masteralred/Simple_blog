@@ -4,7 +4,10 @@
 	<p>
 		<%= row['Content'] %>
 		<br/>
+		<br/>
 		Added at: <%= row['Creation_date'] %>
+		<br/>
+		<a href="/post/<%=row['Id']%>">Comments</a>
 	</p>
 	<hr/>
 <% end %>
