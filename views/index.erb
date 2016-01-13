@@ -1,1 +1,10 @@
-<h2>Latests Posts:</h2>
+<h2>Latest Posts:</h2>
+<br/>
+<% @results.each do |row| %>
+	<p>
+		<%= row['Content'] %>
+		<br/>
+		Added at: <%= row['Creation_date'] %>
+	</p>
+	<hr/>
+<% end %>
