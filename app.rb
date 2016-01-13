@@ -36,5 +36,6 @@ end
 
 post '/new' do
 	message=params[:content]
+	(@error="Please, type your post!"; return erb :new) if message.size <= 0
 	erb "Your typed:</br> #{message}"
 end
