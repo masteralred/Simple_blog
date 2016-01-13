@@ -36,7 +36,12 @@ before '/' do
 end
 
 before '/details/:post_id' do
-	
+	post_id=params[:post_id]
+	db = init_db
+	results = db.execute 'SELECT * FROM Posts WHERE Id=?', [post_id]
+	@row=results[0]
+	@comments = db.execute 'SELECT * FROM Comments WHERE Post_id=? ORDER BY Id', [post_id]
+	db.close
 end
 
 get '/' do
@@ -48,12 +53,6 @@ get '/new' do
 end
 
 get '/details/:post_id' do
-	post_id=params[:post_id]
-	db = init_db
-	results = db.execute 'SELECT * FROM Posts WHERE Id=?', [post_id]
-	@row=results[0]
-	@comments = db.execute 'SELECT * FROM Comments WHERE Post_id=? ORDER BY Id', [post_id]
-	db.close
 	erb :details
 end
 
@@ -69,6 +68,7 @@ end
 post '/details/:post_id' do
 	comment=params[:content]
 	post_id=params[:post_id]
+	(@error="Please, type your post!"; return erb :details) if comment.strip.empty?
 	db = init_db
 	db.execute 'INSERT INTO Comments (Post_id, Creation_date, Content) VALUES (?, datetime(), ?)', [post_id, comment]
 	db.close
