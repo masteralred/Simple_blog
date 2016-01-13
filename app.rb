@@ -36,6 +36,9 @@ end
 
 post '/new' do
 	message=params[:content]
-	(@error="Please, type your post!"; return erb :new) if message.size <= 0
+	(@error="Please, type your post!"; return erb :new) if message.strip.empty?
+	db = init_db
+	db.execute 'INSERT INTO Posts (Creation_date, Content) VALUES (datetime(), ?)', [message]
+	db.close
 	erb "Your typed:</br> #{message}"
 end
