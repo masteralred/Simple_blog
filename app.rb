@@ -9,6 +9,14 @@ def init_db
 	return db
 end
 
+def fields_validation hh
+	hh.each_key do |i|
+		if params[i]==''
+			@error = "Введите: " + hh.select {|k,_| params[k] == ''}.values.join(", ")
+		end
+	end
+end
+
 configure do
 	db = init_db
 	db.execute 'CREATE TABLE IF NOT EXISTS
@@ -16,6 +24,7 @@ configure do
 		(
 			"Id" INTEGER PRIMARY KEY AUTOINCREMENT,
 			"Creation_date" DATE,
+			"Username" TEXT,
 			"Content" TEXT
 		)'
 	db.execute 'CREATE TABLE IF NOT EXISTS
@@ -57,10 +66,13 @@ get '/details/:post_id' do
 end
 
 post '/new' do
-	message=params[:content]
-	(@error="Please, type your post!"; return erb :new) if message.strip.empty?
+	@username=params[:username]
+	@message=params[:content]
+	hh = {:username=>'ваше имя', :content=>'текст поста'}
+	fields_validation hh
+	return erb :new if !@error.nil?
 	db = init_db
-	db.execute 'INSERT INTO Posts (Creation_date, Content) VALUES (datetime(), ?)', [message]
+	db.execute 'INSERT INTO Posts (Creation_date, Username, Content) VALUES (datetime(), ?, ?)', [@username, @message]
 	db.close
 	redirect '/'
 end
@@ -68,7 +80,7 @@ end
 post '/details/:post_id' do
 	comment=params[:content]
 	post_id=params[:post_id]
-	(@error="Please, type your comment!"; return erb :details) if comment.strip.empty?
+	(@error="Сначала введите комментарий!"; return erb :details) if comment.strip.empty?
 	db = init_db
 	db.execute 'INSERT INTO Comments (Post_id, Creation_date, Content) VALUES (?, datetime(), ?)', [post_id, comment]
 	db.close

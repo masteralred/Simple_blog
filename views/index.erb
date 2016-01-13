@@ -2,10 +2,10 @@
 <br/>
 <% @results.each do |row| %>
 	<p>
-		<%= row['Content'] %>
+		<%=row['Content']%>
 		<br/>
 		<br/>
-		<small style="color: #999">Added at: <%= row['Creation_date'] %></small>
+		<small style="color: #999">Added by: <%=row['Username']%> at: <%=row['Creation_date']%></small>
 		<br/>
 		<small><a href="/details/<%=row['Id']%>">Comments</a></small>
 	</p>
