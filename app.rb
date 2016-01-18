@@ -6,11 +6,13 @@ require 'sinatra/activerecord'
 set :database, "sqlite3:./db/blog.db"
 
 class Post < ActiveRecord::Base
+	has_many :comments
 	validates :name, {:presence=> true}
 	validates :content, presence: true
 end
 
 class Comment <ActiveRecord::Base
+	belongs_to :post
 	validates :content, presence: true
 end
 
