@@ -11,27 +11,11 @@ class Post < ActiveRecord::Base
 end
 
 class Comment <ActiveRecord::Base
+	validates :content, presence: true
 end
 
-# def fields_validation hh
-# 	hh.each_key do |i|
-# 		if params[i]==''
-# 			@error = "Введите: " + hh.select {|k,_| params[k] == ''}.values.join(", ")
-# 		end
-# 	end
-# end
-
-# before '/details/:post_id' do
-# 	post_id=params[:post_id]
-# 	#db = init_db
-# 	results = db.execute 'SELECT * FROM Posts WHERE Id=?', [post_id]
-# 	@row=results[0]
-# 	@comments = db.execute 'SELECT * FROM Comments WHERE Post_id=? ORDER BY Id', [post_id]
-# 	db.close
-# end
-
 get '/' do
-	@posts = Post.all
+	@posts = Post.order('created_at DESC')
   	erb :index
 end
 
@@ -40,7 +24,13 @@ get '/new' do
 	erb :new
 end
 
-get '/details/:post_id' do
+before '/details/:id' do
+	@post = Post.find(params[:id])
+	#@comments = Comment.where("post_id = ?", [params[:id]])
+	@comments = Comment.where(post_id: params[:id])
+end
+
+get '/details/:id' do
 	erb :details
 end
 
@@ -54,12 +44,13 @@ post '/new' do
 	end
 end
 
-# post '/details/:post_id' do
-# 	comment=params[:content]
-# 	post_id=params[:post_id]
-# 	(@error="Сначала введите комментарий!"; return erb :details) if comment.strip.empty?
-# 	db = init_db
-# 	db.execute 'INSERT INTO Comments (Post_id, Creation_date, Content) VALUES (?, datetime(), ?)', [post_id, comment]
-# 	db.close
-# 	redirect ('/details/' + post_id)
-# end
+post '/details/:id' do
+	@c = Comment.new params[:comment]
+	@c.post_id = params[:id]
+	if @c.save
+		redirect ('/details/' + params[:id])
+	else
+		@error = @c.errors.full_messages.first
+		erb :details
+	end
+end
