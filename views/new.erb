@@ -1,14 +1,18 @@
 <h2>Add New Post</h2>
 <p>
 	<form action="/new" method="post">
+
 	  <div class="form-group">
 	  	<label>Enter your name</label>
-    	<input name="username" type="text" class="form-control" placeholder="John Smith" value="<%= @username %>">
-      </div>	
+    	<input name="post[name]" type="text" class="form-control" placeholder="John Smith" value="<%= @p.name %>">
+      </div>
+
       <div class="form-group">
     	<label>Enter your post</label>
-	    <textarea name="content" class="form-control" rows="6" placeholder="Type post text here"><%= @message %></textarea>
+	    <textarea name="post[content]" class="form-control" rows="6" placeholder="Type post text here"><%= @p.content %></textarea>
 	  </div>
+
 	  <button type="submit" class="btn btn-primary">Post</button>
+
 	</form>
 </p>

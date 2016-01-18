@@ -1,13 +1,13 @@
 <h2>Latest Posts:</h2>
 <br/>
-<% @results.each do |row| %>
+<% @posts.each do |row| %>
 	<p>
-		<%=row['Content']%>
+		<%=row.content%>
 		<br/>
 		<br/>
-		<small style="color: #999">Added by: <%=row['Username']%> at: <%=row['Creation_date']%></small>
+		<small style="color: #999">Added by: <%=row.name%> at: <%=row.created_at.strftime('%d-%m-%Y %H:%M')%></small>
 		<br/>
-		<small><a href="/details/<%=row['Id']%>">Comments</a></small>
+		<small><a href="/details/<%=row.id%>">Comments</a></small>
 	</p>
 	<hr/>
 <% end %>
