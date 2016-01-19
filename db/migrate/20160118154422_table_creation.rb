@@ -8,7 +8,7 @@ class TableCreation < ActiveRecord::Migration
   		end
 
   		create_table :Comments do |t|
-  			t.belongs_to :post, index:true
+  			t.text :post_id
   			t.text :content
 
   			t.timestamps null: false
