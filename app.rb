@@ -26,16 +26,6 @@ get '/new' do
 	erb :new
 end
 
-before '/details/:id' do
-	@post = Post.find(params[:id])
-	#@comments = Comment.where("post_id = ?", [params[:id]])
-	@comments = Comment.where(post_id: params[:id])
-end
-
-get '/details/:id' do
-	erb :details
-end
-
 post '/new' do
 	@p = Post.new params[:post]
 	if @p.save
@@ -44,6 +34,16 @@ post '/new' do
 		@error = @p.errors.full_messages.first
 		erb :new	
 	end
+end
+
+before '/details/:id' do
+	@post = Post.find(params[:id])
+	#@comments = Comment.where("post_id = ?", [params[:id]])
+	@comments = Comment.where(post_id: params[:id])
+end
+
+get '/details/:id' do
+	erb :details
 end
 
 post '/details/:id' do
